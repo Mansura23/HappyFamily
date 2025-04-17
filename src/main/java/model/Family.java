@@ -1,8 +1,10 @@
 package model;
 
+import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.Objects;
 import java.util.Random;
+import java.util.stream.IntStream;
 
 public class Family implements HumanCreator{
 
@@ -21,12 +23,19 @@ public class Family implements HumanCreator{
         System.out.println("Family constructor called");
         this.mother = mother;
         this.father = father;
+        mother.setFamily(this);
+        father.setFamily(this);
         this.children = new Human[0];
     }
+
     public void addChild(Human child) {
         Human[] children = new Human[this.children .length+1];
-        for (int i=0 ; i<this.children.length ; i++) {
-            children[i] = this.children[i];
+        IntStream.range(0, this.children.length).forEach(i -> children[i] = this.children[i]);
+        if (child.getFamily() == null) {
+            child.setFamily(this);
+        } else {
+            System.out.println("Child already has a family.");
+            return;
         }
         children[children.length-1] = child;
         this.children = children;
@@ -38,13 +47,16 @@ public class Family implements HumanCreator{
             return false;
         }
         Human[] newChildren = new Human[children.length - 1];
+        if (children[index].getFamily() != null) {
+            children[index].setFamily(null);
+        }
         for (int i=0, j=0; i<children.length; i++) {
             if (i != index) {
                 newChildren[j++] = children[i];
             }
         }
         children = newChildren;
-        System.out.println("Child at index " + index + " deleted.");
+        System.out.println("Child at index " + index + " deleted. Child removed from family.");
         return true;
     }
 
@@ -79,25 +91,6 @@ public class Family implements HumanCreator{
         if (pet != null) count++;
         System.out.println("Family members: " + count);
         return count;
-    }
-
-    public void describePet() {
-        System.out.println("I have a " + pet.getSpecies() + ", he is " + pet.getAge() + " years old, he is very " + isSly());
-    }
-
-    public boolean feedPet(boolean isFed) {
-        int randomNumber = random.nextInt(101);
-        if (isFed && randomNumber < getPet().getTrickLevel()) {
-            System.out.println("Hm... I will feed " + getPet().getNickname());
-            return true;
-        } else {
-            System.out.println("I think " + getPet().getNickname() + " is not hungry.");
-            return false;
-        }
-    }
-
-    private String isSly() {
-        return pet.getTrickLevel() > 50 ? "sly" : "not sly";
     }
 
     public Human getMother() {
@@ -150,19 +143,39 @@ public class Family implements HumanCreator{
         int randNum2 = random.nextInt(2);
         int iq = (father.getIq() + mother.getIq())/2;
         String name = "";
+        int year = LocalDate.now().getYear();
 
         if (randNum2 == 0) {
             name += HumanCreator.boyNames[randNum];
-            //Schedule deyisecek
-            Human man = new Man(name, this.getFather().getSurname(), 2025, iq, new String[][]{}, this);
+            Human man = new Man(name, this.getFather().getSurname(), year, iq, new String[][]{});
             addChild(man);
             return man;
         } else {
-            //Schedule deyisecek
-            Human woman = new Woman(name, this.getFather().getSurname(), 2025, iq, new String[][]{}, this);
-            addChild(woman);
             name += HumanCreator.girlNames[randNum];
+            Human woman = new Woman(name, this.getFather().getSurname(), year, iq, new String[][]{});
+            addChild(woman);
             return woman;
         }
+    }
+
+    @Override
+    public String toString() {
+        return "Family{" +
+                "mother=" + mother +
+                ", father=" + father +
+                ", pet=" + pet.getSpecies() +
+                ", children=" + printChildren() +
+                '}';
+    }
+
+    private String printChildren() {
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < children.length; i++) {
+            sb.append(children[i].getName());
+            if (i < children.length - 1) {
+                sb.append(", ");
+            }
+        }
+        return sb.toString();
     }
 }

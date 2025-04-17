@@ -9,7 +9,7 @@ public abstract class Pet {
     private int age;
     private int trickLevel;
     private String[] habits;
-    private Species species;
+    private Species species = Species.UNKNOWN;
 
     public Pet(String nickname, int age, int trickLevel, String[] habits) {
         this.nickname = nickname;
@@ -18,7 +18,9 @@ public abstract class Pet {
         this.habits = habits;
     }
 
-    public abstract void eat();
+    public void eat() {
+        System.out.println("I am eating");
+    }
 
     public abstract void respond();
 

@@ -3,6 +3,8 @@ package model;
 import java.util.Arrays;
 import java.util.Objects;
 
+import static model.Family.random;
+
 public class Human {
 
     private String name;
@@ -10,7 +12,7 @@ public class Human {
     private int year;
     private int iq;
     private String[][] schedule;
-    Family family;
+    private Family family;
 
     public Human(String name, String surname, int year, int iq, String[][] schedule, Family family) {
         this.name = name;
@@ -23,8 +25,36 @@ public class Human {
 
     public Human() {}
 
+    public Human(String name, String surname, int year, int iq, String[][] schedule) {
+        this.name = name;
+        this.surname = surname;
+        this.year = year;
+        this.iq = iq;
+        this.schedule = schedule;
+    }
+
     public void greetPet() {
         System.out.println("Hello, " + family.getPet().getNickname());
+    }
+
+    public void describePet() {
+        System.out.println("I have a " + family.getPet().getSpecies() + ", he is " + family.getPet().getAge() + " years old, and he is " + isSly() + ".");
+    }
+
+    public boolean feedPet(boolean isFed) {
+        int randomNumber = random.nextInt(101);
+        if (isFed) {
+            System.out.println("It is time to fed " + family.getPet().getNickname());
+            return true;
+        } else {
+            if (randomNumber > family.getPet().getTrickLevel()) {
+                System.out.println("Hm... I will feed " + family.getPet().getNickname());
+                return true;
+            } else {
+                System.out.println("I think " + family.getPet().getNickname() + " is not hungry.");
+                return false;
+            }
+        }
     }
 
     public String getName() {
@@ -96,5 +126,13 @@ public class Human {
                 ", surname='" + surname + '\'' +
                 ", name='" + name + '\'' +
                 '}';
+    }
+
+    private String isSly() {
+        if (family.getPet().getTrickLevel() > 50) {
+            return "sly";
+        } else {
+            return "not sly";
+        }
     }
 }

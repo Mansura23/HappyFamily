@@ -1,21 +1,30 @@
 package org.example;
 
-import model.Family;
-import model.Human;
+import model.*;
 
 public class Main {
     public static void main(String[] args) {
 
-        Human mother = new Human("Anna", "Smith", 1985, 120, new String[][]{}, null);
-        Human father = new Human("John", "Smith", 1980, 130, new String[][]{}, null);
-        Human child1 = new Human("Emily", "Smith", 2010, 110, new String[][]{}, null);
-        Human child2 = new Human("Michael", "Smith", 2012, 115, new String[][]{}, null);
-        Human child3 = new Human("Sophia", "Smith", 2015, 105, new String[][]{}, null);
-
+        Man father = new Man("John", "Huseynov",1980, 100, new String[7][]);
+        Woman mother = new Woman("Jane", "Huseynova", 1985, 105, new String[7][]);
         Family family = new Family(mother, father);
-        family.addChild(child1);
-        family.addChild(child2);
-        family.addChild(child3);
-        boolean isDeleted = family.deleteChild(child3);
+
+        Human child = new Human("Ali", "Huseynov", 10, 2013, new String[7][]);
+
+        Pet pet = new Dog("dog", 5, 10, new String[]{"house", "forest"});
+        family.setPet(pet);
+        family.addChild(child);
+        family.bornChild();
+        family.deleteChild(child);
+        family.deleteChild(0);
+        family.deleteChild(0);
+
+        mother.describePet();
+        mother.greetPet();
+        mother.feedPet(false);
+        mother.feedPet(true);
+        father.greetPet();
+        System.out.println(family);
+
     }
 }

@@ -1,17 +1,18 @@
 package model;
 
-public class Dog extends Pet{
+public class Dog extends Pet implements CanFoul{
     public Dog(String nickname, int age, int trickLevel, String[] habits) {
         super(nickname, age, trickLevel, habits);
-    }
-
-    @Override
-    public void eat() {
-
+        super.setSpecies(Species.DOG);
     }
 
     @Override
     public void respond() {
+
+    }
+
+    @Override
+    public void foul() {
 
     }
 }
