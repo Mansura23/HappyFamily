@@ -1,4 +1,6 @@
-package model;
+package interfaces;
+
+import model.Human;
 
 public interface HumanCreator {
 

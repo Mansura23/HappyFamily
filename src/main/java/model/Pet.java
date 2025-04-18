@@ -1,5 +1,7 @@
 package model;
 
+import enums.Species;
+
 import java.util.Arrays;
 import java.util.Objects;
 
@@ -71,11 +73,11 @@ public abstract class Pet {
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         Pet pet = (Pet) o;
-        return age == pet.age && trickLevel == pet.trickLevel && Objects.equals(nickname, pet.nickname) && Objects.deepEquals(habits, pet.habits) && Objects.equals(species, pet.species);
+        return age == pet.age && trickLevel == pet.trickLevel && Objects.equals(species, pet.species);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(nickname, age, trickLevel, Arrays.hashCode(habits), species);
+        return Objects.hash(age, trickLevel, species);
     }
 }

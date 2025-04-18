@@ -1,4 +1,4 @@
-package model;
+package enums;
 
 public enum Species {
     DOG(false, 4, true),

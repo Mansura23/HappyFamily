@@ -1,6 +1,9 @@
 package model;
 
-public class Dog extends Pet implements CanFoul{
+import enums.Species;
+import interfaces.CanFoul;
+
+public class Dog extends Pet implements CanFoul {
     public Dog(String nickname, int age, int trickLevel, String[] habits) {
         super(nickname, age, trickLevel, habits);
         super.setSpecies(Species.DOG);
@@ -8,11 +11,6 @@ public class Dog extends Pet implements CanFoul{
 
     @Override
     public void respond() {
-
-    }
-
-    @Override
-    public void foul() {
-
+        System.out.println("Hello, owner. I am fish. My name is " + super.getNickname() + ". I miss you!");
     }
 }
