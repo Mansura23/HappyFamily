@@ -3,8 +3,10 @@ package model;
 import enums.Species;
 import interfaces.CanFoul;
 
+import java.util.Set;
+
 public class Dog extends Pet implements CanFoul {
-    public Dog(String nickname, int age, int trickLevel, String[] habits) {
+    public Dog(String nickname, int age, int trickLevel, Set<String> habits) {
         super(nickname, age, trickLevel, habits);
         super.setSpecies(Species.DOG);
     }

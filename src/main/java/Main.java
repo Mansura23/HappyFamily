@@ -1,23 +1,25 @@
 import enums.DayOfWeek;
 import model.*;
 
-import java.util.Arrays;
+import java.util.*;
 
 public class Main {
 
-    static final String[][] schedule = {
-            {DayOfWeek.MONDAY.name(), "Meet with girlfriend"},
-            {DayOfWeek.TUESDAY.name(), "Go to university"},
-            {DayOfWeek.THURSDAY.name(), "Do shopping"},
-            {DayOfWeek.WEDNESDAY.name(), "Meet with friends"},
-            {DayOfWeek.FRIDAY.name(), "Enjoy at cinema"},
-            {DayOfWeek.SATURDAY.name(), "Go to mentor"},
-            {DayOfWeek.SUNDAY.name(), "Sleep all day"},
-    };
+    static  Map<DayOfWeek,String> schedule = new HashMap<>();
 
-    static final String[] habits = {"eat", "drink", "sleep", "play", "run"};
 
+
+
+
+    static final Set<String> habits = new HashSet<>(Arrays.asList("eat", "drink", "sleep", "play", "run"));
     public static void main(String[] args) {
+        schedule.put(DayOfWeek.valueOf(DayOfWeek.MONDAY.name()), "Meet with girlfriend");
+        schedule.put(DayOfWeek.valueOf(DayOfWeek.TUESDAY.name()), "Go to university");
+        schedule.put(DayOfWeek.valueOf(DayOfWeek.THURSDAY.name()), "Do shopping");
+        schedule.put(DayOfWeek.valueOf(DayOfWeek.WEDNESDAY.name()), "Meet with family");
+        schedule.put(DayOfWeek.valueOf(DayOfWeek.FRIDAY.name()), "Enjoy at cinema");
+        schedule.put(DayOfWeek.valueOf(DayOfWeek.SATURDAY.name()), "Go to mentor");
+        schedule.put(DayOfWeek.valueOf(DayOfWeek.SUNDAY.name()), "Sleep all day");
 
         Human mother = new Woman("Anna", "Smith", 1985, 100, schedule);
         Human father = new Man("John", "Smith", 1980, 90, schedule);
@@ -30,24 +32,21 @@ public class Main {
         }
 
         Family family = new Family(mother, father);
-        family.setPet(dog);
+
 
         Human child1 = family.bornChild();
         Human child2 = family.bornChild();
-        Human child3 = new Human("Ali", "Smith", 2010, 80);
-        family.addChild(child3);
+
 
         int firstCount = family.countFamily();
         boolean isDeleted1 = family.deleteChild(0);
-        boolean isDeleted2 = family.deleteChild(child3);
         int secondCount = family.countFamily();
 
-        System.out.println(Arrays.toString(family.getChildren()));
 
-        mother.describePet();
-        boolean isFed = father.feedPet(true);
-        mother.greetPet();
-        father.greetPet();
+        mother.describePet(dog);
+        boolean isFed = father.feedPet(true,dog);
+        mother.greetPet(dog);
+        father.greetPet(dog);
         dog.respond();
         dog.eat();
 

@@ -1,14 +1,18 @@
 package model;
 
+import enums.DayOfWeek;
+
+import java.util.Map;
+
 public class Man extends Human{
 
-    public Man() {};
+    public Man() {}
 
     public Man(String name, String surname, int year, int iq) {
         super(name, surname, year, iq);
     }
 
-    public Man(String name, String surname, int year, int iq, String[][] schedule) {
+    public Man(String name, String surname, int year, int iq, Map<DayOfWeek,String> schedule) {
         super(name, surname, year, iq, schedule);
     }
 
@@ -21,7 +25,7 @@ public class Man extends Human{
     }
 
     @Override
-    public void greetPet() {
+    public void greetPet(Pet pet) {
         System.out.println("Hello, my big boy!");
     }
 }

@@ -2,8 +2,10 @@ package model;
 
 import enums.Species;
 
+import java.util.Set;
+
 public class RoboCat extends Pet{
-    public RoboCat(String nickname, int age, int trickLevel, String[] habits) {
+    public RoboCat(String nickname, int age, int trickLevel, Set<String> habits) {
         super(nickname, age, trickLevel, habits);
         super.setSpecies(Species.ROBOCAT);
     }
