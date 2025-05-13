@@ -50,7 +50,7 @@ public abstract class Human {
     }
 
     public void greetPet(Pet pet) {
-        if (family == null || family.getPet().isEmpty()) {
+        if (pet == null) {
             System.out.println(name + " doesn't have a pet.");
             return;
         }
@@ -60,7 +60,7 @@ public abstract class Human {
     }
 
     public void describePet(Pet pet) {
-        if ( pet==null) {
+        if (pet==null) {
             System.out.println(name + " doesn't have a pet.");
             return;
         }
@@ -71,7 +71,7 @@ public abstract class Human {
     }
 
     public boolean feedPet(boolean isTime,Pet pet) {
-        if (family == null || family.getPet() == null) {
+        if (pet == null) {
             System.out.println(name + " doesn't have a pet.");
             return false;
         }
@@ -122,7 +122,7 @@ public abstract class Human {
     }
 
     public void setIq(int iq) {
-        if (iq < 0) {
+        if (iq < 0 || iq > 100) {
             throw new IllegalArgumentException("Invalid IQ");
         }
         this.iq = iq;

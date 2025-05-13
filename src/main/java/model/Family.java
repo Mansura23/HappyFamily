@@ -29,7 +29,7 @@ public class Family implements HumanCreator {
         mother.setFamily(this);
         father.setFamily(this);
         mother.setSurname(father.getSurname());
-        this.children = new ArrayList<>(0);
+        this.children = new ArrayList<>();
     }
 
     public Family(Human mother, Human father, Set<Pet> pets) {
@@ -38,11 +38,15 @@ public class Family implements HumanCreator {
     }
 
     public void addChild(Human child) {
-       if(children.contains(child)) {
-           System.out.println("Child already exists: " + child);
-           return;
-       }
-       children.add(child);
+        if (children.contains(child)) {
+            System.out.println("Child already exists: " + child);
+            return;
+        }
+        if (child == null) {
+            System.out.println("Child cannot be null");
+            return;
+        }
+        children.add(child);
 
     }
 
@@ -66,17 +70,14 @@ public class Family implements HumanCreator {
             return false;
         }
 
-        if(children.contains(child)) {
+        if (children.contains(child)) {
             children.remove(child);
             System.out.println("Child " + child.getName() + " deleted.");
             return true;
-        }
-        else{
+        } else {
             System.out.println("Child " + child.getName() + " does not exist.");
             return false;
         }
-
-
 
 
     }
@@ -84,8 +85,8 @@ public class Family implements HumanCreator {
     public int countFamily() {
         int count = 0;
         if (children != null) count += children.size();
-        if (pets!=null ) count+=pets.size();
-        System.out.println("Count of Family members: " + count);
+        if (pets != null) count += pets.size();
+        System.out.println("Count of Family members: " + count + 2);
         return count + 2;
     }
 
@@ -129,7 +130,7 @@ public class Family implements HumanCreator {
     public Human bornChild() {
         int randNum = random.nextInt(HumanCreator.boyNames.length);
         int randNum2 = random.nextInt(2);
-        int iq = (father.getIq() + mother.getIq())/2;
+        int iq = (father.getIq() + mother.getIq()) / 2;
         String name = "";
         int year = LocalDate.now().getYear();
 
@@ -158,7 +159,7 @@ public class Family implements HumanCreator {
 
     private String printChildren() {
         StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < children.size() ; i++) {
+        for (int i = 0; i < children.size(); i++) {
             sb.append(children.get(i).getName());
             if (i < children.size() - 1) {
                 sb.append(", ");
