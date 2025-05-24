@@ -2,22 +2,23 @@ package model;
 
 import enums.DayOfWeek;
 
+import java.time.LocalDate;
 import java.util.Map;
 
 public class Woman extends Human{
 
     public Woman() {}
 
-    public Woman(String name, String surname, int year) {
-        super(name, surname, year);
+    public Woman(String name, String surname, LocalDate birthDate) {
+        super(name, surname, birthDate);
     }
 
-    public Woman(String name, String surname, int year, int iq, Map<DayOfWeek, String> schedule) {
-        super(name, surname, year, iq, schedule);
+    public Woman(String name, String surname, LocalDate birthDate, int iq, Map<DayOfWeek, String> schedule) {
+        super(name, surname, birthDate, iq, schedule);
     }
 
-    public Woman(String name, String surname, int year, int iq) {
-        super(name, surname, year, iq);
+    public Woman(String name, String surname, LocalDate birthDate, int iq) {
+        super(name, surname, birthDate, iq);
     }
 
     public void makeUp() {
