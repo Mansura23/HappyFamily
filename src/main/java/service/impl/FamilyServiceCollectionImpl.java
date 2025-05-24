@@ -10,6 +10,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class FamilyServiceCollectionImpl implements FamilyServiceCollection {
 
@@ -25,42 +26,38 @@ public class FamilyServiceCollectionImpl implements FamilyServiceCollection {
 
     public void displayAllFamilies() {
         List<Family> families = familyDao.getAllFamilies();
-        for (int i=0 ; i<families.size() ; i++){
-            System.out.print(i + ": ");
-            System.out.println(families.get(i).toString());
-        }
+        AtomicInteger index = new AtomicInteger();
+        families.forEach(family -> {
+            System.out.print(index + ": ");
+            System.out.println(family.toString());
+            index.getAndIncrement();
+        });
     }
 
     @Override
     public List<Family> getFamiliesBiggerThan(int number) {
         List<Family> familiesBiggerThanNumber = new ArrayList<>();
-        for (int i=0 ; i<familyDao.getAllFamilies().size() ; i++){
-            if(familyDao.getAllFamilies().get(i).countFamily() > number) {
-                familiesBiggerThanNumber.add(familyDao.getAllFamilies().get(i));
-            }
-        }
+        familyDao.getAllFamilies().forEach(family -> {
+             if (family.countFamily() > number) familiesBiggerThanNumber.add(family);
+        });
         return familiesBiggerThanNumber;
     }
 
     @Override
     public List<Family> getFamiliesLessThan(int number) {
         List<Family> familiesLessThanNumber = new ArrayList<>();
-        for (int i=0 ; i<familyDao.getAllFamilies().size() ; i++){
-            if(familyDao.getAllFamilies().get(i).countFamily() < number) {
-                familiesLessThanNumber.add(familyDao.getAllFamilies().get(i));
-            }
-        }
+        familyDao.getAllFamilies().forEach(family -> {
+            if (family.countFamily() < number) familiesLessThanNumber.add(family);
+        });
         return familiesLessThanNumber;
     }
 
     @Override
     public int countFamiliesWithMemberNumber(int number) {
         List<Family> familiesWithMemberNumber = new ArrayList<>();
-        for (int i=0 ; i<familyDao.getAllFamilies().size() ; i++){
-            if(familyDao.getAllFamilies().get(i).countFamily() == number) {
-                familiesWithMemberNumber.add(familyDao.getAllFamilies().get(i));
-            }
-        }
+        familyDao.getAllFamilies().forEach(family -> {
+            if (family.countFamily() == number) familiesWithMemberNumber.add(family);
+        });
         return familiesWithMemberNumber.size();
     }
 
