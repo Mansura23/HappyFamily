@@ -3,7 +3,10 @@ import dao.FamilyDao;
 import dao.impl.CollectionFamilyDaoImpl;
 import enums.DayOfWeek;
 import exceptions.FamilyOverflowException;
-import model.*;
+import model.Family;
+import model.Human;
+import model.Man;
+import model.Woman;
 import service.FamilyService;
 import service.impl.FamilyServiceCollectionImpl;
 
@@ -31,7 +34,15 @@ public class Main {
         boolean exited = false;
         while (!exited) {
             Main.showMenu();
-            int choice = scanner.nextInt();
+            int choice;
+            while (true) {
+                if (scanner.hasNextInt()) {
+                    choice = scanner.nextInt();
+                    break;
+                } else {
+                    System.out.println("Invalid input. Please try again.");
+                }
+            }
             switch (choice) {
                 case 1:
                     break;
@@ -51,13 +62,10 @@ public class Main {
                     System.out.println(createANewFamily());
                     break;
                 case 7:
-                    if (deleteFamilyByItsIndex()) {
-                        System.out.println("The family was deleted successfully.");
-                    } else {
-                        System.out.println("Family could not be deleted.");
-                    }
+                    deleteFamilyByItsIndex();
                     break;
                 case 8:
+                    menuForEditingFamily();
                     break;
                 case 9:
                     removeAllChildrenOverAge();
@@ -69,12 +77,170 @@ public class Main {
         }
     }
 
-    private static void removeAllChildrenOverAge(){
+    private static void menuForEditingFamily() {
+        Scanner scanner = new Scanner(System.in);
+        boolean exited = false;
+        while (!exited) {
+            System.out.println("Please select the action you want to edit: ");
+            System.out.println("- 1. Give birth to a baby");
+            System.out.println("- 2. Adopt a child");
+            System.out.println("- 3. Return to main menu ");
+            int choice;
+            while (true) {
+                if (scanner.hasNextInt()) {
+                    choice = scanner.nextInt();
+                    break;
+                } else {
+                    System.out.println("Invalid input. Please try again.");
+                    scanner.nextLine();
+                }
+            }
+            switch (choice) {
+                case 1:
+                    Family family = giveBirthToBaby();
+                    System.out.println("The child was born in " + family.prettyFormat());
+                    break;
+                case 2:
+                    adoptChild();
+                    break;
+                case 3:
+                    exited = true;
+                    break;
+            }
+        }
+    }
+
+    private static Family giveBirthToBaby() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Please enter the index of family: ");
+        int index;
+        while (true) {
+            if (scanner.hasNextInt()) {
+                index = scanner.nextInt();
+                break;
+            } else {
+                scanner.nextLine();
+                System.out.println("Please enter true index of family: ");
+            }
+        }
+        scanner.nextLine();
+        System.out.println("Please enter a nameForBoy if it will be boy: ");
+        String nameForBoy = scanner.nextLine();
+        System.out.println("Please enter a nameForBoy if it will be girl: ");
+        String nameForGirl = scanner.nextLine();
+        Family family = familyController.getFamilyById(index);
+        return familyController.bornChild(family, nameForBoy, nameForGirl);
+    }
+
+    private static void adoptChild() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Please select the index of family: ");
+        Human child;
+        int index;
+        while (true) {
+            if (scanner.hasNextInt()) {
+                index = scanner.nextInt();
+                break;
+            }  else {
+                scanner.nextLine();
+                System.out.println("Please enter VALID index!");
+            }
+        }
+        int gender;
+        while (true) {
+            System.out.println("Please select the gender of the child: 1: BOY, 2: GIRL");
+            if (scanner.hasNextInt()) {
+                gender =  scanner.nextInt();
+                if(gender == 1){
+                    child = new Man();
+                    break;
+                } else if (gender == 2){
+                    child = new Woman();
+                    break;
+                } else {
+                    System.out.println("Invalid input. Please try again.");
+                    scanner.nextLine();
+                }
+            }
+        }
+        System.out.print("Enter name of child: ");
+        child.setName(scanner.nextLine());
+        System.out.print("Enter last name of child: ");
+        child.setSurname(scanner.nextLine());
+        int yearChild;
+        int monthChild;
+        int dayChild;
+        while (true) {
+            System.out.print("Enter birth year of child: ");
+            if (scanner.hasNextInt()) {
+                int input = scanner.nextInt();
+                if (input > 1900 && input < 2012) {
+                    yearChild = input;
+                    break;
+                }
+            } else {
+                scanner.next();
+            }
+            System.out.println("Invalid");
+        }
+        while (true) {
+            System.out.print("Enter birth month of child: ");
+            if (scanner.hasNextInt()) {
+                int input = scanner.nextInt();
+                if (input > 0 && input <= 12) {
+                    monthChild = input;
+                    break;
+                }
+            } else {
+                scanner.next();
+            }
+            System.out.println("Invalid");
+        }
+
+        Calendar cal = new GregorianCalendar(yearChild, monthChild - 1, 1);
+        while (true) {
+            System.out.print("Enter birth day of child: ");
+            if (scanner.hasNextInt()) {
+                int input = scanner.nextInt();
+                if (input > 0 && input <= cal.getActualMaximum(Calendar.DAY_OF_MONTH)) {
+                    dayChild = input;
+                    break;
+                }
+            } else {
+                scanner.next();
+            }
+            System.out.println("Invalid");
+        }
+        LocalDate birthDate = LocalDate.of(yearChild, monthChild, dayChild);
+        child.setBirthDate(birthDate);
+        int iq;
+        while (true) {
+            System.out.print("Enter iq of child: ");
+            if (scanner.hasNextInt()) {
+                iq = scanner.nextInt();
+                if (iq < 0 || iq > 100) {
+                    scanner.nextLine();
+                    System.out.println("Invalid input. Please try again.");
+                } else {
+                    break;
+                }
+            }  else {
+                scanner.nextLine();
+                System.out.println("Please enter VALID IQ!");
+            }
+        }
+        child.setIq(iq);
+        scanner.nextLine();
+        Family family = familyController.adoptChild(familyController.getFamilyById(index), child);
+        System.out.println("Family: " + family + "adopted");
+    }
+
+    private static void removeAllChildrenOverAge() {
         Scanner scanner = new Scanner(System.in);
         System.out.print("Enter age for removing children: ");
         int age;
-        while(true){
-            if(scanner.hasNextInt()){
+        while (true) {
+            if (scanner.hasNextInt()) {
                 age = scanner.nextInt();
                 break;
             } else {
@@ -83,7 +249,7 @@ public class Main {
             }
         }
         familyController.deleteAllChildrenOlderThen(age);
-        System.out.println("All children older than "+ age+" are removed!!!");
+        System.out.println("All children older than " + age + " are removed!!!");
     }
 
     private static void showMenu() {
@@ -99,17 +265,17 @@ public class Main {
         System.out.println("-10. Exit from the program");
     }
 
-    private static  boolean deleteFamilyByItsIndex(){
+    private static boolean deleteFamilyByItsIndex() {
         System.out.print("Enter the index for deleting family");
-        Scanner scanner= new Scanner(System.in);
-        int index= scanner.nextInt();
+        Scanner scanner = new Scanner(System.in);
+        int index = scanner.nextInt();
         try {
             familyController.deleteFamilyByIndex(index);
             return true;
-        } catch (FamilyOverflowException e){
+        } catch (FamilyOverflowException e) {
             System.out.println(e.getMessage());
         }
-        return  false;
+        return false;
     }
 
     private static void displayFamiliesWithMemberNumber() {
@@ -164,9 +330,9 @@ public class Main {
         mother.setName(scanner.nextLine());
         System.out.print("Enter last name of mother: ");
         mother.setSurname(scanner.nextLine());
-        int yearMother = 0;
-        int monthMother = 0;
-        int dayMother = 0;
+        int yearMother;
+        int monthMother;
+        int dayMother;
         while (true) {
             System.out.print("Enter birth year of mother: ");
             if (scanner.hasNextInt()) {
@@ -195,7 +361,7 @@ public class Main {
             System.out.println("Invalid");
         }
 
-        Calendar cal = new GregorianCalendar(yearMother, monthMother, 1);
+        Calendar cal = new GregorianCalendar(yearMother, monthMother - 1, 1);
         while (true) {
             System.out.print("Enter birth day of mother: ");
             if (scanner.hasNextInt()) {
@@ -207,13 +373,27 @@ public class Main {
             } else {
                 scanner.next();
             }
-            ;
             System.out.println("Invalid");
         }
         LocalDate birthDate = LocalDate.of(yearMother, monthMother, dayMother);
         mother.setBirthDate(birthDate);
-        System.out.print("Enter iq of mother: ");
-        mother.setIq(scanner.nextInt());
+        int iq;
+        while (true) {
+            System.out.print("Enter iq of mother: ");
+            if (scanner.hasNextInt()) {
+                iq = scanner.nextInt();
+                if (iq < 0 || iq > 100) {
+                    scanner.nextLine();
+                    System.out.println("Invalid input. Please try again.");
+                } else {
+                    break;
+                }
+            }  else {
+                scanner.nextLine();
+                System.out.println("Please enter VALID IQ!");
+            }
+        }
+        mother.setIq(iq);
         scanner.nextLine();
         System.out.print("Enter name of father: ");
         String fatherName = scanner.nextLine();
@@ -221,9 +401,9 @@ public class Main {
         System.out.print("Enter last name of father: ");
         String fatherSurname = scanner.nextLine();
         father.setSurname(fatherSurname);
-        int yearFather = 0;
-        int monthFather = 0;
-        int dayFather = 0;
+        int yearFather;
+        int monthFather;
+        int dayFather;
         while (true) {
             System.out.print("Enter birth year of father: ");
             if (scanner.hasNextInt()) {
@@ -251,7 +431,7 @@ public class Main {
             }
             System.out.println("Invalid");
         }
-        Calendar cal2 = new GregorianCalendar(yearFather, monthFather, 1);
+        Calendar cal2 = new GregorianCalendar(yearFather, monthFather - 1, 1);
         while (true) {
             System.out.print("Enter birth day of father: ");
             if (scanner.hasNextInt()) {
@@ -263,13 +443,27 @@ public class Main {
             } else {
                 scanner.next();
             }
-            ;
             System.out.println("Invalid");
         }
         LocalDate birthDateFather = LocalDate.of(yearFather, monthFather, dayFather);
         father.setBirthDate(birthDateFather);
-        System.out.print("Enter iq of father: ");
-        father.setIq(scanner.nextInt());
+        int iqOfFather;
+        while (true) {
+            System.out.print("Enter iq of father: ");
+            if (scanner.hasNextInt()) {
+                iqOfFather = scanner.nextInt();
+                if (iqOfFather < 0 || iqOfFather > 100) {
+                    scanner.nextLine();
+                    System.out.println("Invalid input. Please try again.");
+                } else {
+                    break;
+                }
+            }  else {
+                scanner.nextLine();
+                System.out.println("Please enter VALID IQ!");
+            }
+        }
+        father.setIq(iqOfFather);
 
         Family family = new Family(mother, father);
         Main.familyController.createNewFamily(mother, father);

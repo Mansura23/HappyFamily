@@ -16,7 +16,7 @@ public interface FamilyService {
     int countFamiliesWithMemberNumber(int number);
     Family createNewFamily(Human h1, Human h2);
     boolean deleteFamilyByIndex(int index);
-    public Family bornChild(Family family, String maleName,String femaleName);
+    Family bornChild(Family family, String maleName,String femaleName);
     Family adoptChild(Family family,Human human);
     boolean deleteAllChildrenOlderThen(int age);
     int count();
