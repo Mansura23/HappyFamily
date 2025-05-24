@@ -3,6 +3,8 @@ package model;
 import enums.DayOfWeek;
 
 import java.time.LocalDate;
+import java.time.Period;
+import java.time.format.DateTimeFormatter;
 import java.util.Map;
 import java.util.Objects;
 
@@ -12,42 +14,51 @@ public abstract class Human {
 
     private String name;
     private String surname;
-    private int year;
+    private LocalDate birthDate;
     private int iq;
     private Map<DayOfWeek,String> schedule;
     private Family family;
 
     public Human() {}
 
-    public Human(String name, String surname, int year) {
-        if (name == null || surname == null || year < 1850 || year > LocalDate.now().getYear()) {
+    public Human(String name, String surname, LocalDate birthDate) {
+        if (name == null || surname == null || birthDate.getYear() < 1850 || birthDate.getYear() > LocalDate.now().getYear()) {
             throw new IllegalArgumentException("Invalid arguments");
         }
         this.name = name;
         this.surname = surname;
-        this.year = year;
+        this.birthDate = birthDate;
     }
 
-    public Human(String name, String surname, int year, int iq, Map<DayOfWeek,String> schedule) {
-        if (name == null || surname == null || year < 1850 || iq < 0 || year > LocalDate.now().getYear()) {
+    public Human(String name, String surname, LocalDate birthDate, int iq, Map<DayOfWeek,String> schedule) {
+        if (name == null || surname == null || birthDate.getYear() < 1850 || birthDate.getYear() > LocalDate.now().getYear()) {
             throw new IllegalArgumentException("Invalid arguments");
         }
         this.name = name;
         this.surname = surname;
-        this.year = year;
+        this.birthDate = birthDate;
         this.iq = iq;
         this.schedule = schedule;
     }
 
-    public Human(String name, String surname, int year, int iq) {
-        if (name == null || surname == null || year < 1850 || iq < 0 || year > LocalDate.now().getYear()) {
+    public Human(String name, String surname, LocalDate birthDate, int iq) {
+        if (name == null || surname == null || birthDate.getYear() < 1850 || birthDate.getYear() > LocalDate.now().getYear()) {
             throw new IllegalArgumentException("Invalid arguments");
         }
         this.name = name;
         this.surname = surname;
-        this.year = year;
+        this.birthDate = birthDate;
         this.iq = iq;
     }
+//constructor for adopted children
+    public Human(String name,String surname,String dateOfBirth,int iq){
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("DD/MM/YYYY");
+        this.birthDate= LocalDate.parse(dateOfBirth,dateTimeFormatter);
+        this.name= name;
+        this.surname = surname;
+        this.iq= iq;
+    }
+
 
     public void greetPet(Pet pet) {
         if (pet == null) {
@@ -106,15 +117,20 @@ public abstract class Human {
         this.surname = surname;
     }
 
-    public int getYear() {
-        return year;
+    public LocalDate getBirthDate() {
+        return birthDate;
     }
 
-    public void setYear(int year) {
-        if (year < 1850 || year > LocalDate.now().getYear()) {
+    public void setBirthDate(LocalDate birthDate) {
+        if (birthDate.getYear() < 1850 || birthDate.getYear() > LocalDate.now().getYear()) {
             throw new IllegalArgumentException("Invalid year");
         }
-        this.year = year;
+        this.birthDate = birthDate;
+    }
+    public String describeAge(){
+        Period between = Period.between(LocalDate.now(), birthDate);
+        return between.getYears()+" years, "+between.getMonths()+" months, "+between.getDays()+ " days old";
+
     }
 
     public int getIq() {
@@ -148,20 +164,22 @@ public abstract class Human {
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         Human human = (Human) o;
-        return year == human.year && iq == human.iq && Objects.equals(name, human.name) && Objects.equals(surname, human.surname) && Objects.equals(family, human.family);
+        return birthDate == human.birthDate && iq == human.iq && Objects.equals(name, human.name) && Objects.equals(surname, human.surname) && Objects.equals(family, human.family);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, surname, year, iq, family);
+        return Objects.hash(name, surname, birthDate, iq, family);
     }
 
     @Override
     public String toString() {
+        DateTimeFormatter dateTimeFormatter= DateTimeFormatter.ofPattern("DD/MM/YYYY");
+        String format = birthDate.format(dateTimeFormatter);
         return "Human{" +
                 "schedule=" +schedule +
                 ", iq=" + iq +
-                ", year=" + year +
+                ", birth date=" + format +
                 ", surname='" + surname + '\'' +
                 ", name='" + name + '\'' +
                 '}';
@@ -173,6 +191,10 @@ public abstract class Human {
         } else {
             return "not sly";
         }
+    }
+
+    public String prettyFormat() {
+        return "{name='" + name + "',surname='" + surname + "',birthDate='" + birthDate + "',iq=" + iq + ",schedule={FRIDAY=fitness, MONDAY=fitness}}";
     }
 
 }

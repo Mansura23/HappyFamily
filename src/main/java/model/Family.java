@@ -30,6 +30,7 @@ public class Family implements HumanCreator {
         father.setFamily(this);
         mother.setSurname(father.getSurname());
         this.children = new ArrayList<>();
+
     }
 
     public Family(Human mother, Human father, Set<Pet> pets) {
@@ -132,7 +133,7 @@ public class Family implements HumanCreator {
         int randNum2 = random.nextInt(2);
         int iq = (father.getIq() + mother.getIq()) / 2;
         String name = "";
-        int year = LocalDate.now().getYear();
+        LocalDate year = LocalDate.now();
 
         if (randNum2 == 0) {
             name += HumanCreator.boyNames[randNum];
@@ -146,6 +147,27 @@ public class Family implements HumanCreator {
             return woman;
         }
     }
+
+    public Human bornChild(String maleName, String femaleName) {
+
+        int randNum2 = random.nextInt(2);
+        int iq = (father.getIq() + mother.getIq()) / 2;
+        String name = "";
+        LocalDate year = LocalDate.now();
+
+        if (randNum2 == 0) {
+            name += maleName;
+            Human man = new Man(name, this.getFather().getSurname(), year, iq);
+            addChild(man);
+            return man;
+        } else {
+            name += femaleName;
+            Human woman = new Woman(name, this.getFather().getSurname(), year, iq);
+            addChild(woman);
+            return woman;
+        }
+    }
+
 
     @Override
     public String toString() {
@@ -164,6 +186,26 @@ public class Family implements HumanCreator {
             if (i < children.size() - 1) {
                 sb.append(", ");
             }
+        }
+        return sb.toString();
+    }
+
+    public String prettyFormat() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("family: \n\t").append("mother: ").append(mother.prettyFormat()).append("\n\t").append("father: ").append(father.prettyFormat())
+                .append("\n\t").append("children: ").append("\n\t\t").append(printChildren()).append("\n");
+        children.forEach(child -> {
+            if (child instanceof Man) {
+                sb.append("boy: ");
+                sb.append(child.prettyFormat()).append("\n\t\t");
+            } else if (child instanceof Woman) {
+                sb.append("girl: ");
+                sb.append(child.prettyFormat()).append("\n\t\t");
+            }
+        });
+        sb.append("pets: ");
+        if (pets != null) {
+            pets.forEach(pet -> sb.append(pet.prettyFormat()));
         }
         return sb.toString();
     }

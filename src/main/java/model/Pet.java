@@ -81,4 +81,9 @@ public abstract class Pet {
     public int hashCode() {
         return Objects.hash(age, trickLevel, species);
     }
+
+    public String prettyFormat()  {
+        return "{nickname=" + nickname + ",age=" + age + ",trickLevel=" +
+                trickLevel + ",habits=" + habits + ",species=" + species;
+    }
 }
