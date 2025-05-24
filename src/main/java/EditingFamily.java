@@ -2,10 +2,14 @@ import controller.FamilyController;
 import dao.FamilyDao;
 import dao.impl.CollectionFamilyDaoImpl;
 import model.Family;
+import model.Human;
+import model.Man;
+import model.Woman;
 import service.FamilyService;
 import service.FamilyServiceCollection;
 import service.impl.FamilyServiceCollectionImpl;
 
+import java.time.LocalDate;
 import java.util.Scanner;
 
 public class EditingFamily {
@@ -34,10 +38,26 @@ public class EditingFamily {
         if (index<0){
             return;
         }
-        System.out.println("Enter full name, year of birth, intelligence");
-        int year = in.nextInt();
-        String fullName = in.next();
+        System.out.println("Enter full name, year of birth, intelligence,gender");
+        String gender=in.next();
+        if (gender.equals("male")){
+            Man man=new Man();
+        }
+        else if (gender.equals("female")){
+            Woman woman=new Woman();
+        }
+        else {
+            System.out.println("Invalid gender");
+        }
+
+        LocalDate yearOfBirth=LocalDate.parse(in.next());
+        String name = in.next();
+        String surname = in.next();
         int iq=in.nextInt();
+
+
+
+
 
 
     }
