@@ -20,7 +20,6 @@ public class CollectionFamilyDaoImpl implements FamilyDao {
         }
         System.out.println("Invalid index");
         return null;
-
     }
 
     @Override
