@@ -93,7 +93,7 @@ public class FamilyServiceCollectionImpl implements FamilyServiceCollection {
         boolean found=false;
         for(Family family:familyDao.getAllFamilies()){
             for(Human child:family.getChildren()){
-                if(LocalDateTime.now().getYear()-child.getYear()>age){
+                if(LocalDateTime.now().getYear()-child.getBirthDate().getYear()>age){
                     family.deleteChild(child);
                     found=true;
                 }
