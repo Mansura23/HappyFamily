@@ -39,6 +39,7 @@ public class EditingFamily {
         String fullName = in.next();
         int iq=in.nextInt();
 
+
     }
     public void DisplayingMenu(){
 

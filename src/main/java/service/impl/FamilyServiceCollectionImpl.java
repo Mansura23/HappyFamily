@@ -15,7 +15,7 @@ public class FamilyServiceCollectionImpl implements FamilyServiceCollection {
 
     private final FamilyDao familyDao;
 
-    public FamilyServiceCollectionImpl(FamilyDao familyDao) {
+    public FamilyServiceCollectionImpl() {
         this.familyDao = familyDao;
     }
 
