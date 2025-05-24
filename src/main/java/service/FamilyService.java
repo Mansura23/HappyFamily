@@ -14,9 +14,9 @@ public interface FamilyService {
     List<Family> getFamiliesBiggerThan(int number);
     List<Family> getFamiliesLessThan(int number);
     int countFamiliesWithMemberNumber(int number);
-    List<Family> createNewFamily(Human h1, Human h2);
+    Family createNewFamily(Human h1, Human h2);
     boolean deleteFamilyByIndex(int index);
-    Family bornChild(Family family,String gender);
+    public Family bornChild(Family family, String maleName,String femaleName);
     Family adoptChild(Family family,Human human);
     boolean deleteAllChildrenOlderThen(int age);
     int count();
