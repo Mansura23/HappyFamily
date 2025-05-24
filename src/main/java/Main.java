@@ -85,7 +85,8 @@ public class Main {
 
     private static void displayFamiliesGreaterThanSpecifiedNumber() {
         Scanner scanner = new Scanner(System.in);
-        if (scanner.hasNextInt()) {
+        while (!scanner.hasNextInt()) {
+            System.out.println("Please enter a number greater than or equal to 1");
             int number = scanner.nextInt();
             List<Family> families = familyController.getFamiliesBiggerThan(number);
             families.forEach(family -> System.out.println(family.prettyFormat() + "\n"));
@@ -127,7 +128,6 @@ public class Main {
             } else {
                 scanner.next();
             }
-
             System.out.println("Invalid");
         }
         while (true) {
@@ -138,8 +138,6 @@ public class Main {
                     monthMother = input;
                     break;
                 }
-
-
             } else {
                 scanner.next();
             }
@@ -156,8 +154,6 @@ public class Main {
                     dayMother = input;
                     break;
                 }
-
-
             } else {
                 scanner.next();
             }
@@ -168,8 +164,6 @@ public class Main {
         mother.setBirthDate(birthDate);
         System.out.print("Enter iq of mother: ");
         mother.setIq(scanner.nextInt());
-
-
         scanner.nextLine();
         System.out.print("Enter name of father: ");
         String fatherName = scanner.nextLine();
@@ -177,12 +171,9 @@ public class Main {
         System.out.print("Enter last name of father: ");
         String fatherSurname = scanner.nextLine();
         father.setSurname(fatherSurname);
-
         int yearFather = 0;
         int monthFather = 0;
         int dayFather = 0;
-
-
         while (true) {
             System.out.print("Enter birth year of father: ");
             if (scanner.hasNextInt()) {
@@ -197,8 +188,6 @@ public class Main {
 
             System.out.println("Invalid");
         }
-
-
         while (true) {
             System.out.print("Enter birth month of father: ");
             if (scanner.hasNextInt()) {
@@ -210,10 +199,8 @@ public class Main {
             } else {
                 scanner.next();
             }
-
             System.out.println("Invalid");
         }
-
         Calendar cal2 = new GregorianCalendar(yearFather, monthFather, 1);
         while (true) {
             System.out.print("Enter birth day of father: ");
