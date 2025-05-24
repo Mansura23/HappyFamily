@@ -2,6 +2,7 @@ import controller.FamilyController;
 import dao.FamilyDao;
 import dao.impl.CollectionFamilyDaoImpl;
 import enums.DayOfWeek;
+import exceptions.FamilyOverflowException;
 import model.*;
 import service.FamilyService;
 import service.impl.FamilyServiceCollectionImpl;
@@ -50,16 +51,39 @@ public class Main {
                     System.out.println(createANewFamily());
                     break;
                 case 7:
+                    if (deleteFamilyByItsIndex()) {
+                        System.out.println("The family was deleted successfully.");
+                    } else {
+                        System.out.println("Family could not be deleted.");
+                    }
                     break;
                 case 8:
                     break;
                 case 9:
+                    removeAllChildrenOverAge();
                     break;
                 case 10:
                     exited = true;
                     break;
             }
         }
+    }
+
+    private static void removeAllChildrenOverAge(){
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Enter age for removing children: ");
+        int age;
+        while(true){
+            if(scanner.hasNextInt()){
+                age = scanner.nextInt();
+                break;
+            } else {
+                System.out.println("Invalid input. Please try again.");
+                scanner.nextLine();
+            }
+        }
+        familyController.deleteAllChildrenOlderThen(age);
+        System.out.println("All children older than "+ age+" are removed!!!");
     }
 
     private static void showMenu() {
@@ -69,10 +93,23 @@ public class Main {
         System.out.println("- 4. Display a list of families where the number of people is less than the specified number");
         System.out.println("- 5. Calculate the number of families where the number of members is");
         System.out.println("- 6. Create a new family");
-        System.out.println("- 7. Display all families");
+        System.out.println("- 7. Delete a family by its index in the general list");
         System.out.println("- 8. Edit a family by its index in the general list");
         System.out.println("- 9. Remove all children over the age of majority");
         System.out.println("-10. Exit from the program");
+    }
+
+    private static  boolean deleteFamilyByItsIndex(){
+        System.out.print("Enter the index for deleting family");
+        Scanner scanner= new Scanner(System.in);
+        int index= scanner.nextInt();
+        try {
+            familyController.deleteFamilyByIndex(index);
+            return true;
+        } catch (FamilyOverflowException e){
+            System.out.println(e.getMessage());
+        }
+        return  false;
     }
 
     private static void displayFamiliesWithMemberNumber() {
