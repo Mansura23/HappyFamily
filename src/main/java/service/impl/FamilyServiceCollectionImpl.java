@@ -3,7 +3,6 @@ package service.impl;
 import dao.FamilyDao;
 import model.Family;
 import model.Human;
-import model.Man;
 import model.Pet;
 import service.FamilyServiceCollection;
 
