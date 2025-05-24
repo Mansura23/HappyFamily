@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CollectionFamilyDaoImpl implements FamilyDao {
-    private  List<Family> families = new ArrayList<>();
+    private  List<Family> families;
 
     public List<Family> getAllFamilies() {
         return new ArrayList<>(families);
