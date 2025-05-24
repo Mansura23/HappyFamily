@@ -30,6 +30,7 @@ public class Family implements HumanCreator {
         father.setFamily(this);
         mother.setSurname(father.getSurname());
         this.children = new ArrayList<>();
+
     }
 
     public Family(Human mother, Human father, Set<Pet> pets) {
@@ -194,16 +195,18 @@ public class Family implements HumanCreator {
         sb.append("family: \n\t").append("mother: ").append(mother.prettyFormat()).append("\n\t").append("father: ").append(father.prettyFormat())
                 .append("\n\t").append("children: ").append("\n\t\t").append(printChildren()).append("\n");
         children.forEach(child -> {
-                    if (child instanceof Man) {
-                        sb.append("boy: ");
-                        sb.append(child.prettyFormat()).append("\n\t\t");
-                    } else if (child instanceof Woman) {
-                        sb.append("girl: ");
-                        sb.append(child.prettyFormat()).append("\n\t\t");
-                    }
-                });
-                sb.append("pets: ");
-        pets.forEach(pet -> sb.append(pet.prettyFormat()));
+            if (child instanceof Man) {
+                sb.append("boy: ");
+                sb.append(child.prettyFormat()).append("\n\t\t");
+            } else if (child instanceof Woman) {
+                sb.append("girl: ");
+                sb.append(child.prettyFormat()).append("\n\t\t");
+            }
+        });
+        sb.append("pets: ");
+        if (pets != null) {
+            pets.forEach(pet -> sb.append(pet.prettyFormat()));
+        }
         return sb.toString();
     }
 }

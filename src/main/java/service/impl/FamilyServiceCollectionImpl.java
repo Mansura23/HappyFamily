@@ -28,9 +28,8 @@ public class FamilyServiceCollectionImpl implements FamilyServiceCollection {
         List<Family> families = familyDao.getAllFamilies();
         AtomicInteger index = new AtomicInteger();
         families.forEach(family -> {
-            System.out.print(index + ": ");
+            System.out.print(index.getAndIncrement() + ": ");
             System.out.println(family.toString());
-            index.getAndIncrement();
         });
     }
 

@@ -7,10 +7,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CollectionFamilyDaoImpl implements FamilyDao {
-    private  List<Family> families;
+    private List<Family> families = new ArrayList<>();
 
     public List<Family> getAllFamilies() {
-        return new ArrayList<>(families);
+        return families;
     }
 
     @Override
@@ -43,7 +43,7 @@ public class CollectionFamilyDaoImpl implements FamilyDao {
              int index= families.indexOf(family);
              families.set(index,family);
         }
-        else{
+        else {
             families.add(family);
         }
     }
