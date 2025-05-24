@@ -5,8 +5,9 @@ import java.util.*;
 
 public class Main {
 
-    static  Map<DayOfWeek,String> schedule = new HashMap<>();
+    static Map<DayOfWeek, String> schedule = new HashMap<>();
     static final Set<String> habits = new HashSet<>(Arrays.asList("eat", "drink", "sleep", "play", "run"));
+
     public static void main(String[] args) {
         schedule.put(DayOfWeek.valueOf(DayOfWeek.MONDAY.name()), "Meet with girlfriend");
         schedule.put(DayOfWeek.valueOf(DayOfWeek.TUESDAY.name()), "Go to university");
@@ -15,35 +16,47 @@ public class Main {
         schedule.put(DayOfWeek.valueOf(DayOfWeek.FRIDAY.name()), "Enjoy at cinema");
         schedule.put(DayOfWeek.valueOf(DayOfWeek.SATURDAY.name()), "Go to mentor");
         schedule.put(DayOfWeek.valueOf(DayOfWeek.SUNDAY.name()), "Sleep all day");
-
-        Human mother = new Woman("Anna", "Smith", 1985, 100, schedule);
-        Human father = new Man("John", "Smith", 1980, 90, schedule);
-        Pet dog = new DomesticCat("Asteroid Destroyer", 3, 70, habits);
-
-        try {
-            Human erroredMan = new Man("Nihad", "Mamedov", 2026);  // This will throw an exception
-        } catch (IllegalArgumentException e) {
-            System.out.println("Error occurred: " + e.getMessage());
+        Scanner scanner = new Scanner(System.in);
+        boolean exited = false;
+        while (!exited) {
+            Main.showMenu();
+            int choice = scanner.nextInt();
+            switch (choice) {
+                case 1:
+                    break;
+                case 2:
+                    break;
+                case 3:
+                    break;
+                case 4:
+                    break;
+                case 5:
+                    break;
+                case 6:
+                    break;
+                case 7:
+                    break;
+                case 8:
+                    break;
+                case 9:
+                    break;
+                case 10:
+                    exited = true;
+                    break;
+            }
         }
+    }
 
-        Family family = new Family(mother, father);
-
-
-        Human child1 = family.bornChild();
-        Human child2 = family.bornChild();
-
-
-        int firstCount = family.countFamily();
-        boolean isDeleted1 = family.deleteChild(0);
-        int secondCount = family.countFamily();
-
-
-        mother.describePet(dog);
-        boolean isFed = father.feedPet(true,dog);
-        mother.greetPet(dog);
-        father.greetPet(dog);
-        dog.respond();
-        dog.eat();
-
+    private static void showMenu() {
+        System.out.println("- 1. Fill with test data:");
+        System.out.println("- 2. Display the entire list of families");
+        System.out.println("- 3. Display a list of families where the number of people is greater than the specified number");
+        System.out.println("- 4. Display a list of families where the number of people is less than the specified number");
+        System.out.println("- 5. Calculate the number of families where the number of members is");
+        System.out.println("- 6. Create a new family");
+        System.out.println("- 7. Display all families");
+        System.out.println("- 8. Edit a family by its index in the general list");
+        System.out.println("- 9. Remove all children over the age of majority");
+        System.out.println("-10. Exit from the program");
     }
 }
