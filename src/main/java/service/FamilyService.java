@@ -5,6 +5,7 @@ import model.Human;
 import model.Pet;
 
 import java.util.List;
+import java.util.Set;
 
 public interface FamilyService {
 
@@ -20,7 +21,7 @@ public interface FamilyService {
     boolean deleteAllChildrenOlderThen(int age);
     int count();
     Family getFamilyById(int id);
-    List<Pet> getPets(int familyIndex);
+    Set<Pet> getPets(int familyIndex);
     boolean addPet(int familyIndex,Pet pet);
 
 
