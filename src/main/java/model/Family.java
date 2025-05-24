@@ -147,6 +147,28 @@ public class Family implements HumanCreator {
         }
     }
 
+    public Human bornChild(String maleName,String femaleName) {
+
+        int randNum2 = random.nextInt(2);
+        int iq = (father.getIq() + mother.getIq()) / 2;
+        String name = "";
+        int year = LocalDate.now().getYear();
+
+        if (randNum2 == 0) {
+            name += maleName;
+            Human man = new Man(name, this.getFather().getSurname(), year, iq);
+            addChild(man);
+            return man;
+        } else {
+            name += femaleName;
+            Human woman = new Woman(name, this.getFather().getSurname(), year, iq);
+            addChild(woman);
+            return woman;
+        }
+    }
+
+
+
     @Override
     public String toString() {
         return "Family{" +

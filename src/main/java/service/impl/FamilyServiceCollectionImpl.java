@@ -3,9 +3,11 @@ package service.impl;
 import dao.FamilyDao;
 import model.Family;
 import model.Human;
+import model.Man;
 import model.Pet;
 import service.FamilyServiceCollection;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -64,28 +66,44 @@ public class FamilyServiceCollectionImpl implements FamilyServiceCollection {
     }
 
     @Override
-    public List<Family> createNewFamily(Human h1, Human h2) {
-        return List.of();
+    public Family createNewFamily(Human h1, Human h2) {
+        Family family = new Family(h1,h2);
+        familyDao.saveFamily(family);
+        return  family;
     }
 
     @Override
     public boolean deleteFamilyByIndex(int index) {
-        return false;
+       return familyDao.deleteFamily(index);
     }
 
     @Override
-    public Family bornChild(Family family, String gender) {
-        return null;
+    public Family bornChild(Family family, String maleName,String femaleName) {
+        Human child =family.bornChild(maleName,femaleName);
+        familyDao.saveFamily(family);
+        return  family;
+
     }
 
     @Override
     public Family adoptChild(Family family, Human human) {
-        return null;
+        family.addChild(human);
+        familyDao.saveFamily(family);
+        return  family;
     }
 
     @Override
     public boolean deleteAllChildrenOlderThen(int age) {
-        return false;
+        boolean found=false;
+        for(Family family:familyDao.getAllFamilies()){
+            for(Human child:family.getChildren()){
+                if(LocalDateTime.now().getYear()-child.getYear()>age){
+                    family.deleteChild(child);
+                    found=true;
+                }
+            }
+        }
+        return  found;
     }
 
     @Override
