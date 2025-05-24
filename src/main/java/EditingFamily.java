@@ -1,7 +1,19 @@
+import controller.FamilyController;
+import dao.FamilyDao;
+import dao.impl.CollectionFamilyDaoImpl;
+import model.Family;
+import service.FamilyService;
+import service.FamilyServiceCollection;
+import service.impl.FamilyServiceCollectionImpl;
+
 import java.util.Scanner;
 
 public class EditingFamily {
     Scanner in = new Scanner(System.in);
+    CollectionFamilyDaoImpl dao = new CollectionFamilyDaoImpl();
+    FamilyServiceCollection familyServiceCollection = new FamilyServiceCollectionImpl();
+
+    FamilyController familyController= new FamilyController(familyServiceCollection);
     public  void GivingBirth(){
         System.out.println("Enter ID");
         int index=in.nextInt();
@@ -10,6 +22,10 @@ public class EditingFamily {
         }
         System.out.println("what name to give the boy, what name to girl");
         String name = in.next();
+        String name1=in.next();
+        Family family1 =familyController.getFamilyById(index);
+        familyController.bornChild(family1,name,name1);
+
 
     }
     public void AdoptingChild(){
