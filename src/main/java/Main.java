@@ -3,10 +3,7 @@ import dao.FamilyDao;
 import dao.impl.CollectionFamilyDaoImpl;
 import enums.DayOfWeek;
 import exceptions.FamilyOverflowException;
-import model.Family;
-import model.Human;
-import model.Man;
-import model.Woman;
+import model.*;
 import service.FamilyService;
 import service.impl.FamilyServiceCollectionImpl;
 
@@ -30,6 +27,7 @@ public class Main {
         schedule.put(DayOfWeek.valueOf(DayOfWeek.FRIDAY.name()), "Enjoy at cinema");
         schedule.put(DayOfWeek.valueOf(DayOfWeek.SATURDAY.name()), "Go to mentor");
         schedule.put(DayOfWeek.valueOf(DayOfWeek.SUNDAY.name()), "Sleep all day");
+
         Scanner scanner = new Scanner(System.in);
         boolean exited = false;
         while (!exited) {
@@ -45,6 +43,7 @@ public class Main {
             }
             switch (choice) {
                 case 1:
+                    loadData();
                     break;
                 case 2:
                     displayEntireListOfFamilies();
@@ -75,6 +74,25 @@ public class Main {
                     break;
             }
         }
+    }
+
+    private static void loadData() {
+        Human father1 = new Man("Akif", "Aliyev", LocalDate.of(1990, 3, 5), 75,schedule);
+        Human mother1 = new Man("Gulay", "Aliyeva", LocalDate.of(1995, 7, 23), 83,schedule);
+        Human father2 = new Man("Vusal", "Balayev", LocalDate.of(1976, 6, 6), 90,schedule);
+        Human mother2 = new Man("Bircexanim", "Balayeva", LocalDate.of(1984, 2, 28), 87,schedule);
+        Human adoptedChild1 = new Man("Vasif", "Aliyev",  LocalDate.of(2004, 11, 13), 70,schedule);
+        Human adoptedChild2 = new Woman("Melek", "Balayev",  LocalDate.of(2004, 11, 13), 70,schedule);
+
+        Pet pet1 = new Dog("Alabas", 3, 78, habits);
+        Pet pet2 = new DomesticCat("Asteroid Destroyer", 2, 83, habits);
+        Family family1 = familyController.createNewFamily(father1, mother1);
+        Family family2 = familyController.createNewFamily(father2, mother2);
+        familyController.addPet(0, pet1);
+        familyController.addPet(1, pet2);
+        familyController.adoptChild(family1, adoptedChild1);
+        familyController.adoptChild(family2, adoptedChild2);
+
     }
 
     private static void menuForEditingFamily() {
