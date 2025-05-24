@@ -4,7 +4,6 @@ import interfaces.HumanCreator;
 
 import java.time.LocalDate;
 import java.util.*;
-import java.util.stream.IntStream;
 
 public class Family implements HumanCreator {
 
@@ -87,7 +86,6 @@ public class Family implements HumanCreator {
         int count = 0;
         if (children != null) count += children.size();
         if (pets != null) count += pets.size();
-        System.out.println("Count of Family members: " + count + 2);
         return count + 2;
     }
 
@@ -153,16 +151,16 @@ public class Family implements HumanCreator {
         int randNum2 = random.nextInt(2);
         int iq = (father.getIq() + mother.getIq()) / 2;
         String name = "";
-        LocalDate year = LocalDate.now();
+        LocalDate birthDay = LocalDate.now();
 
         if (randNum2 == 0) {
             name += maleName;
-            Human man = new Man(name, this.getFather().getSurname(), year, iq);
+            Human man = new Man(name, this.getFather().getSurname(), birthDay, iq);
             addChild(man);
             return man;
         } else {
             name += femaleName;
-            Human woman = new Woman(name, this.getFather().getSurname(), year, iq);
+            Human woman = new Woman(name, this.getMother().getSurname(), birthDay, iq);
             addChild(woman);
             return woman;
         }
@@ -193,7 +191,7 @@ public class Family implements HumanCreator {
     public String prettyFormat() {
         StringBuilder sb = new StringBuilder();
         sb.append("family: \n\t").append("mother: ").append(mother.prettyFormat()).append("\n\t").append("father: ").append(father.prettyFormat())
-                .append("\n\t").append("children: ").append("\n\t\t").append(printChildren()).append("\n");
+                .append("\n\t").append("children: ").append("\n\t\t");
         children.forEach(child -> {
             if (child instanceof Man) {
                 sb.append("boy: ");

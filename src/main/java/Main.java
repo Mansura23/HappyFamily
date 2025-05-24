@@ -39,6 +39,7 @@ public class Main {
                     break;
                 } else {
                     System.out.println("Invalid input. Please try again.");
+                    scanner.next();
                 }
             }
             switch (choice) {
@@ -142,9 +143,9 @@ public class Main {
             }
         }
         scanner.nextLine();
-        System.out.println("Please enter a nameForBoy if it will be boy: ");
+        System.out.println("Please enter a name if it will be boy: ");
         String nameForBoy = scanner.nextLine();
-        System.out.println("Please enter a nameForBoy if it will be girl: ");
+        System.out.println("Please enter a name if it will be girl: ");
         String nameForGirl = scanner.nextLine();
         Family family = familyController.getFamilyById(index);
         return familyController.bornChild(family, nameForBoy, nameForGirl);
@@ -181,6 +182,7 @@ public class Main {
                 }
             }
         }
+        scanner.nextLine();
         System.out.print("Enter name of child: ");
         child.setName(scanner.nextLine());
         System.out.print("Enter last name of child: ");
@@ -250,7 +252,7 @@ public class Main {
         child.setIq(iq);
         scanner.nextLine();
         Family family = familyController.adoptChild(familyController.getFamilyById(index), child);
-        System.out.println("Family: " + family + "adopted");
+        System.out.println(child.getName() + "adopted to the family: " + family.prettyFormat());
     }
 
     private static void removeAllChildrenOverAge() {
@@ -267,7 +269,6 @@ public class Main {
             }
         }
         familyController.deleteAllChildrenOlderThen(age);
-        System.out.println("All children older than " + age + " are removed!!!");
     }
 
     private static void showMenu() {
