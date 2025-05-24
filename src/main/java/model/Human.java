@@ -194,4 +194,8 @@ public abstract class Human {
         }
     }
 
+    public String prettyFormat() {
+        return "{name='" + name + "',surname='" + surname + "',birthDate='" + birthDate + "',iq=" + iq + ",schedule={FRIDAY=fitness, MONDAY=fitness}}";
+    }
+
 }

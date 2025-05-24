@@ -147,7 +147,7 @@ public class Family implements HumanCreator {
         }
     }
 
-    public Human bornChild(String maleName,String femaleName) {
+    public Human bornChild(String maleName, String femaleName) {
 
         int randNum2 = random.nextInt(2);
         int iq = (father.getIq() + mother.getIq()) / 2;
@@ -168,7 +168,6 @@ public class Family implements HumanCreator {
     }
 
 
-
     @Override
     public String toString() {
         return "Family{" +
@@ -187,6 +186,24 @@ public class Family implements HumanCreator {
                 sb.append(", ");
             }
         }
+        return sb.toString();
+    }
+
+    public String prettyFormat() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("family: \n\t").append("mother: ").append(mother.prettyFormat()).append("\n\t").append("father: ").append(father.prettyFormat())
+                .append("\n\t").append("children: ").append("\n\t\t").append(printChildren()).append("\n");
+        children.forEach(child -> {
+                    if (child instanceof Man) {
+                        sb.append("boy: ");
+                        sb.append(child.prettyFormat()).append("\n\t\t");
+                    } else if (child instanceof Woman) {
+                        sb.append("girl: ");
+                        sb.append(child.prettyFormat()).append("\n\t\t");
+                    }
+                });
+                sb.append("pets: ");
+        pets.forEach(pet -> sb.append(pet.prettyFormat()));
         return sb.toString();
     }
 }

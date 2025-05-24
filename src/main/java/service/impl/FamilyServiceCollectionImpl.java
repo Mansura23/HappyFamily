@@ -78,7 +78,6 @@ public class FamilyServiceCollectionImpl implements FamilyServiceCollection {
         Human child =family.bornChild(maleName,femaleName);
         familyDao.saveFamily(family);
         return  family;
-
     }
 
     @Override

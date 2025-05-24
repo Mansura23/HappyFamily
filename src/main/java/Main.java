@@ -6,11 +6,6 @@ import java.util.*;
 public class Main {
 
     static  Map<DayOfWeek,String> schedule = new HashMap<>();
-
-
-
-
-
     static final Set<String> habits = new HashSet<>(Arrays.asList("eat", "drink", "sleep", "play", "run"));
     public static void main(String[] args) {
         schedule.put(DayOfWeek.valueOf(DayOfWeek.MONDAY.name()), "Meet with girlfriend");
