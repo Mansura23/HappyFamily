@@ -8,6 +8,7 @@ import service.FamilyServiceCollection;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 public class FamilyServiceCollectionImpl implements FamilyServiceCollection {
 
@@ -89,22 +90,39 @@ public class FamilyServiceCollectionImpl implements FamilyServiceCollection {
 
     @Override
     public int count() {
-        return 0;
+        return familyDao.getAllFamilies().size();
     }
 
     @Override
     public Family getFamilyById(int id) {
-        return null;
+        return familyDao.getFamilyByIndex(id);
     }
 
     @Override
-    public List<Pet> getPets(int familyIndex) {
-        return List.of();
+    public Set<Pet> getPets(int familyIndex) {
+        List<Family> families = familyDao.getAllFamilies();
+        if (familyIndex >= families.size() || familyIndex < 0) {
+            System.out.println("The index is Out of Bound!");
+            return null;
+        }
+        return families.get(familyIndex).getPet();
     }
 
     @Override
     public boolean addPet(int familyIndex, Pet pet) {
-        return false;
+        List<Family> families = familyDao.getAllFamilies();
+        if (familyIndex >= families.size() || familyIndex < 0) {
+            System.out.println("The index is Out of Bound!");
+            return false;
+        }
+        Set<Pet> petsOfFamily = families.get(familyIndex).getPet();
+        int length = petsOfFamily.size();
+        petsOfFamily.add(pet);
+        if (petsOfFamily.size() == length) {
+            System.out.println("The pet have been added recently!");
+            return false;
+        }
+        return true;
     }
 
 }
