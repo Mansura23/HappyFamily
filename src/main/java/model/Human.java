@@ -5,7 +5,6 @@ import enums.DayOfWeek;
 import java.time.LocalDate;
 import java.time.Period;
 import java.time.format.DateTimeFormatter;
-import java.time.temporal.ChronoUnit;
 import java.util.Map;
 import java.util.Objects;
 
@@ -122,7 +121,7 @@ public abstract class Human {
         return birthDate;
     }
 
-    public void setYear(LocalDate birthDate) {
+    public void setBirthDate(LocalDate birthDate) {
         if (birthDate.getYear() < 1850 || birthDate.getYear() > LocalDate.now().getYear()) {
             throw new IllegalArgumentException("Invalid year");
         }

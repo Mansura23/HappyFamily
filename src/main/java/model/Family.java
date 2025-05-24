@@ -132,7 +132,7 @@ public class Family implements HumanCreator {
         int randNum2 = random.nextInt(2);
         int iq = (father.getIq() + mother.getIq()) / 2;
         String name = "";
-        int year = LocalDate.now().getYear();
+        LocalDate year = LocalDate.now();
 
         if (randNum2 == 0) {
             name += HumanCreator.boyNames[randNum];
@@ -152,7 +152,7 @@ public class Family implements HumanCreator {
         int randNum2 = random.nextInt(2);
         int iq = (father.getIq() + mother.getIq()) / 2;
         String name = "";
-        int year = LocalDate.now().getYear();
+        LocalDate year = LocalDate.now();
 
         if (randNum2 == 0) {
             name += maleName;
