@@ -4,7 +4,6 @@ import dao.impl.CollectionFamilyDaoImpl;
 import enums.DayOfWeek;
 import model.*;
 import service.FamilyService;
-import service.FamilyServiceCollection;
 import service.impl.FamilyServiceCollectionImpl;
 
 import java.time.LocalDate;
@@ -39,11 +38,13 @@ public class Main {
                     displayEntireListOfFamilies();
                     break;
                 case 3:
-                    displayFamiliesGreaterThenSpecifiedNumber();
+                    displayFamiliesGreaterThanSpecifiedNumber();
                     break;
                 case 4:
+                    displayFamiliesSmallerThanSpecifiedNumber();
                     break;
                 case 5:
+                    displayFamiliesWithMemberNumber();
                     break;
                 case 6:
                     System.out.println(createANewFamily());
@@ -74,14 +75,30 @@ public class Main {
         System.out.println("-10. Exit from the program");
     }
 
-    private static void displayFamiliesGreaterThenSpecifiedNumber() {
+    private static void displayFamiliesWithMemberNumber() {
         Scanner scanner = new Scanner(System.in);
-        if(scanner.hasNextInt()) {
+        if (scanner.hasNextInt()) {
+            int number = scanner.nextInt();
+            System.out.println("The number of families is: " + familyController.countFamiliesWithMemberNumber(number));
+        }
+    }
+
+    private static void displayFamiliesGreaterThanSpecifiedNumber() {
+        Scanner scanner = new Scanner(System.in);
+        if (scanner.hasNextInt()) {
             int number = scanner.nextInt();
             List<Family> families = familyController.getFamiliesBiggerThan(number);
             families.forEach(family -> System.out.println(family.prettyFormat() + "\n"));
         }
+    }
 
+    private static void displayFamiliesSmallerThanSpecifiedNumber() {
+        Scanner scanner = new Scanner(System.in);
+        if (scanner.hasNextInt()) {
+            int number = scanner.nextInt();
+            List<Family> families = familyController.getFamiliesLessThan(number);
+            families.forEach(family -> System.out.println(family.prettyFormat() + "\n"));
+        }
     }
 
     private static void displayEntireListOfFamilies() {
