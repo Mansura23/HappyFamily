@@ -85,20 +85,33 @@ public class Main {
 
     private static void displayFamiliesGreaterThanSpecifiedNumber() {
         Scanner scanner = new Scanner(System.in);
-        while (!scanner.hasNextInt()) {
-            System.out.println("Please enter a number greater than or equal to 1");
-            int number = scanner.nextInt();
-            List<Family> families = familyController.getFamiliesBiggerThan(number);
-            families.forEach(family -> System.out.println(family.prettyFormat() + "\n"));
+        while (true) {
+            System.out.println("Please enter a number: ");
+            if (scanner.hasNextInt()) {
+                int number = scanner.nextInt();
+                List<Family> families = familyController.getFamiliesBiggerThan(number);
+                families.forEach(family -> System.out.println(family.prettyFormat() + "\n"));
+                break;
+            } else {
+                System.out.println("You entered INVALID number");
+                scanner.next();
+            }
         }
     }
 
     private static void displayFamiliesSmallerThanSpecifiedNumber() {
         Scanner scanner = new Scanner(System.in);
-        if (scanner.hasNextInt()) {
-            int number = scanner.nextInt();
-            List<Family> families = familyController.getFamiliesLessThan(number);
-            families.forEach(family -> System.out.println(family.prettyFormat() + "\n"));
+        while (true) {
+            System.out.println("Please enter a number: ");
+            if (scanner.hasNextInt()) {
+                int number = scanner.nextInt();
+                List<Family> families = familyController.getFamiliesLessThan(number);
+                families.forEach(family -> System.out.println(family.prettyFormat() + "\n"));
+                break;
+            } else {
+                scanner.next();
+            }
+            System.out.println("You entered INVALID number");
         }
     }
 
