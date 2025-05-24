@@ -40,6 +40,7 @@ public class CollectionFamilyDaoImpl implements FamilyDao {
     @Override
     public void saveFamily(Family family) {
         if(families.contains(family)){
+            System.out.println("This family contains!");
              int index= families.indexOf(family);
              families.set(index,family);
         }

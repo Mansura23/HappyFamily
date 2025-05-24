@@ -282,6 +282,7 @@ public class Main {
         System.out.println("- 8. Edit a family by its index in the general list");
         System.out.println("- 9. Remove all children over the age of majority");
         System.out.println("-10. Exit from the program");
+        System.out.println("Please enter your choice: ");
     }
 
     private static boolean deleteFamilyByItsIndex() {
