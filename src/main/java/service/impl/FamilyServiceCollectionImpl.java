@@ -6,6 +6,7 @@ import model.Human;
 import model.Pet;
 import service.FamilyServiceCollection;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class FamilyServiceCollectionImpl implements FamilyServiceCollection {
@@ -17,26 +18,48 @@ public class FamilyServiceCollectionImpl implements FamilyServiceCollection {
     }
 
     public List<Family> getAllFamilies() {
-        return null;
+        return familyDao.getAllFamilies();
     }
 
-    public List<Family> displayAllFamilies() {
-        return null;
-    }
-
-    @Override
-    public List<Family> getFamiliesBiggerThan() {
-        return List.of();
-    }
-
-    @Override
-    public List<Family> getFamiliesLessThan() {
-        return List.of();
+    public void displayAllFamilies() {
+        List<Family> families = familyDao.getAllFamilies();
+        for (int i=0 ; i<families.size() ; i++){
+            System.out.print(i + ": ");
+            System.out.println(families.get(i).toString());
+        }
     }
 
     @Override
-    public List<Family> countFamiliesWithMemberNumber() {
-        return List.of();
+    public List<Family> getFamiliesBiggerThan(int number) {
+        List<Family> familiesBiggerThanNumber = new ArrayList<>();
+        for (int i=0 ; i<familyDao.getAllFamilies().size() ; i++){
+            if(familyDao.getAllFamilies().get(i).countFamily() > number) {
+                familiesBiggerThanNumber.add(familyDao.getAllFamilies().get(i));
+            }
+        }
+        return familiesBiggerThanNumber;
+    }
+
+    @Override
+    public List<Family> getFamiliesLessThan(int number) {
+        List<Family> familiesLessThanNumber = new ArrayList<>();
+        for (int i=0 ; i<familyDao.getAllFamilies().size() ; i++){
+            if(familyDao.getAllFamilies().get(i).countFamily() < number) {
+                familiesLessThanNumber.add(familyDao.getAllFamilies().get(i));
+            }
+        }
+        return familiesLessThanNumber;
+    }
+
+    @Override
+    public int countFamiliesWithMemberNumber(int number) {
+        List<Family> familiesWithMemberNumber = new ArrayList<>();
+        for (int i=0 ; i<familyDao.getAllFamilies().size() ; i++){
+            if(familyDao.getAllFamilies().get(i).countFamily() == number) {
+                familiesWithMemberNumber.add(familyDao.getAllFamilies().get(i));
+            }
+        }
+        return familiesWithMemberNumber.size();
     }
 
     @Override
