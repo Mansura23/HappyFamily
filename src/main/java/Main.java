@@ -194,7 +194,7 @@ public class Main {
             System.out.print("Enter birth year of child: ");
             if (scanner.hasNextInt()) {
                 int input = scanner.nextInt();
-                if (input > 1900 && input < 2012) {
+                if (input > 1900 && input < 2025) {
                     yearChild = input;
                     break;
                 }
