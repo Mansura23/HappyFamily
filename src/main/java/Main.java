@@ -56,7 +56,7 @@ public class Main {
                     displayFamiliesSmallerThanSpecifiedNumber();
                     break;
                 case 5:
-                    displayFamiliesWithMemberNumber();
+                    displayCountOfFamiliesWithMemberNumber();
                     break;
                 case 6:
                     System.out.println(createANewFamily());
@@ -194,7 +194,7 @@ public class Main {
             System.out.print("Enter birth year of child: ");
             if (scanner.hasNextInt()) {
                 int input = scanner.nextInt();
-                if (input > 1900 && input < 2012) {
+                if (input > 1900 && input < 2025) {
                     yearChild = input;
                     break;
                 }
@@ -298,18 +298,26 @@ public class Main {
         return false;
     }
 
-    private static void displayFamiliesWithMemberNumber() {
+    private static void displayCountOfFamiliesWithMemberNumber() {
         Scanner scanner = new Scanner(System.in);
-        if (scanner.hasNextInt()) {
-            int number = scanner.nextInt();
-            System.out.println("The number of families is: " + familyController.countFamiliesWithMemberNumber(number));
+        while (true) {
+            System.out.print("Please enter a number: ");
+            if (scanner.hasNextInt()) {
+                int number = scanner.nextInt();
+                System.out.println("The number of families is: " + familyController.countFamiliesWithMemberNumber(number));
+                break;
+            } else {
+                System.out.println("You entered INVALID number");
+                scanner.next();
+            }
         }
+
     }
 
     private static void displayFamiliesGreaterThanSpecifiedNumber() {
         Scanner scanner = new Scanner(System.in);
         while (true) {
-            System.out.println("Please enter a number: ");
+            System.out.print("Please enter a number: ");
             if (scanner.hasNextInt()) {
                 int number = scanner.nextInt();
                 List<Family> families = familyController.getFamiliesBiggerThan(number);
