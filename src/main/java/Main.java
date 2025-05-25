@@ -357,7 +357,7 @@ public class Main {
             System.out.print("Enter birth year of mother: ");
             if (scanner.hasNextInt()) {
                 int input = scanner.nextInt();
-                if (input > 1900 && input < 2012) {
+                if (input > 1900 && input < 2007) {
                     yearMother = input;
                     break;
                 }
@@ -428,7 +428,7 @@ public class Main {
             System.out.print("Enter birth year of father: ");
             if (scanner.hasNextInt()) {
                 int input = scanner.nextInt();
-                if (input > 1900 && input < 2012) {
+                if (input > 1900 && input < 2007) {
                     yearFather = input;
                     break;
                 }
